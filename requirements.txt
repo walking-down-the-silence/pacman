@@ -1,0 +1,45 @@
+1. Abstraction for collision detection strategy
+	1.1 Simple iterative sweep and prune algorithm
+		1.1.1 AABB tree structure for sweep and prune algorithm
+	1.2 Strategy for sprites collision detection (narrow phase)
+		1.2.1 Complex collision detection strategy for sprites
+
+2. Abstraction for sprite frames
+	2.1 Sprite frames based on internal state
+	2.2 Sprite frames for single state animation
+		2.2.1 Frame for normal state
+		2.2.2 Frame for frightened state
+		2.2.3 Frame for eaten state
+	
+3. Real-time communication between client and server
+	3.1 SignalR channel for push notifications
+	3.2 SignalR message-passing and serialization
+	3.3 SignalR message consumption and re-rendering
+	
+4. Movement strategies for pac-man and ghosts
+	4.1 Pac-Man movement strategy
+	4.2 Shadow movement strategy
+	4.3 Bashful movement strategy
+	4.4 Speedy movement strategy
+	4.5 Pokey movement strategy
+	4.6 Ghosts movement strategy
+	4.7 Dead ghost movement strategy
+		
+5. Generation and random positoning of special objects
+	5.1 Rules for generating cherries
+
+6. Console rendering for all kinds of sprites
+	6.1 Sprite bitmap difference strategy
+	6.2 Sprite bitmap difference renderer
+	
+7. Game Engine generic implementation
+	7.1 Bundle all game logic into single game engine class
+	7.2 Actors to handle game engine logic
+	7.3 Decorate actors with behaviors (movement, collision, eating, etc.)
+	
+8. Behaviors for eatables on the map
+	8.1 Remove eaten food and cherries from the map
+	8.2 Combo score when eating several ghosts while they are frightened 
+	
+9. Invisible in-game event execution when stepping into one
+	9.1 Ressurecting ghosts from dead when back to respawn

@@ -1,0 +1,10 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Pac-Man";
+}
+
+@await Html.PartialAsync("VectorMapClassic")
+
+<script src="~/lib/signalr/signalr.js"></script>
+<script src="~/js/site.js"></script>
