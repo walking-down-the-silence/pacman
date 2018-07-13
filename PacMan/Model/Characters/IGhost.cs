@@ -1,6 +1,6 @@
 ﻿namespace PacMan
 {
-    public interface IGhost : ISprite, IResetable, IEatableBehavior
+    public interface IGhost : ISprite, IResetable, IEatable
     {
         GhostMode Mode { get; }
 

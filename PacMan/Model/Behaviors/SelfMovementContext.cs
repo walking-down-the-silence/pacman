@@ -4,11 +4,11 @@ namespace PacMan
 {
     public class SelfMovementContext
     {
-        public SelfMovementContext(IEventSink eventSink, ITilemap map, PacManState pacManState, DateTime lastUpdateTime)
+        public SelfMovementContext(IEventSink eventSink, ITilemap map, GameState gameState, DateTime lastUpdateTime)
         {
             EventSink = eventSink;
             Map = map;
-            PacManState = pacManState;
+            GameState = gameState;
             LastUpdateTime = lastUpdateTime;
             CurrentTime = DateTime.Now;
         }
@@ -17,7 +17,7 @@ namespace PacMan
 
         public ITilemap Map { get; }
 
-        public PacManState PacManState { get; }
+        public GameState GameState { get; }
 
         public DateTime LastUpdateTime { get; }
 

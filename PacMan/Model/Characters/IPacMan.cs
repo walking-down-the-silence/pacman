@@ -1,6 +1,6 @@
 ﻿namespace PacMan
 {
-    public interface IPacMan : ISprite, IResetable
+    public interface IPacMan : ISprite, IResetable, IEatable
     {
         CharacterState State { get; }
 
@@ -9,8 +9,6 @@
         void Kill();
 
         void Ressurect();
-
-        void Eat(FoodContext context);
 
         void Move(SelfMovementContext context);
     }

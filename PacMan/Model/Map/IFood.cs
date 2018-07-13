@@ -1,6 +1,6 @@
 ﻿namespace PacMan
 {
-    public interface IFood : ISprite, IEatableBehavior
+    public interface IFood : ISprite, IEatable
     {
     }
 }

@@ -1,5 +1,4 @@
-﻿using static System.Math;
-using System.Linq;
+﻿using System.Linq;
 using System;
 
 namespace PacMan
@@ -159,9 +158,11 @@ namespace PacMan
             SetCurrentFrame(_normalStateFrame);
         }
 
-        public void Execute(FoodContext context)
+        public void Effect(FoodContext context)
         {
-            if (Mode != GhostMode.Dead)
+            if (context.Eatable is IPacMan pacMan
+                && Mode == GhostMode.Frightened 
+                && Mode != GhostMode.Dead)
             {
                 Kill();
                 context.GameState.UpScore(200 * context.GameState.Multiplier);

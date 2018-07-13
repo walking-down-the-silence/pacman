@@ -21,29 +21,6 @@ namespace PacMan
 
         public void Ressurect() => IsDead = false;
 
-        public void Eat(FoodContext context)
-        {
-            if (context.Eatable is IGhost ghost)
-            {
-                if (ghost.Mode == GhostMode.Frightened && ghost.Mode != GhostMode.Dead)
-                {
-                    ghost.Execute(context);
-                }
-                else if (ghost.Mode != GhostMode.Frightened && ghost.Mode != GhostMode.Dead)
-                {
-                    Kill();
-                    Reset();
-                    context.Ghosts.ToList().ForEach(actor => actor.Reset());
-                    context.PacManState.DropLife();
-                    context.EventSink.Publish(new PacManEaten());
-                }
-            }
-            else
-            {
-                context.Eatable.Execute(context);
-            }
-        }
-
         public void Move(SelfMovementContext context)
         {
             // get next target based on ghost mode and corresponding movement strategy
@@ -62,9 +39,9 @@ namespace PacMan
                     .ToList();
 
                 // specified direction is not allowed, so stop
-                State.Direction = !allowedDirections.Contains(context.PacManState.Direction)
+                State.Direction = !allowedDirections.Contains(context.GameState.PacManNextTurn)
                     ? Direction.None
-                    : context.PacManState.Direction;
+                    : context.GameState.PacManNextTurn;
             }
 
             if (State.Direction != Direction.None)
@@ -81,6 +58,20 @@ namespace PacMan
             State = new CharacterState { Direction = Direction.None, Target = Offset.Default };
             Position = _initialPosition;
             Ressurect();
+        }
+
+        public void Effect(FoodContext context)
+        {
+            if (context.Eatable is IGhost ghost
+                && ghost.Mode != GhostMode.Frightened
+                && ghost.Mode != GhostMode.Dead)
+            {
+                Kill();
+                Reset();
+                context.Map.Ghosts.ToList().ForEach(actor => actor.Reset());
+                context.GameState.DropLife();
+                context.EventSink.Publish(new PacManEaten());
+            }
         }
     }
 }

@@ -9,10 +9,10 @@ namespace PacMan
         {
         }
 
-        public void Execute(FoodContext context)
+        public void Effect(FoodContext context)
         {
-            context.Actors.Remove(this);
-            context.Ghosts.ToList().ForEach(ghost => ghost.Frighten());
+            context.Map.All.Remove(this);
+            context.Map.Ghosts.ToList().ForEach(ghost => ghost.Frighten());
             context.GameState.UpScore(50);
             context.EventSink.Publish(new PelletEaten(true));
         }

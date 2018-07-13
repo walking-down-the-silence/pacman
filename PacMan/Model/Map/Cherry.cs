@@ -7,9 +7,9 @@
         {
         }
 
-        public void Execute(FoodContext context)
+        public void Effect(FoodContext context)
         {
-            context.Actors.Remove(this);
+            context.Map.All.Remove(this);
             context.GameState.UpScore(100);
             context.EventSink.Publish(new CherryEaten());
         }

@@ -4,9 +4,9 @@ namespace PacMan
 {
     public class MovementHandler : IHandler<ConsoleKeyPressedEvent>
     {
-        private readonly PacManState _state;
+        private readonly GameState _state;
 
-        public MovementHandler(PacManState state)
+        public MovementHandler(GameState state)
         {
             _state = state;
         }
@@ -16,19 +16,19 @@ namespace PacMan
             switch (value.ConsoleKey)
             {
                 case ConsoleKey.RightArrow:
-                    _state.Direction = Direction.Right;
+                    _state.PacManNextTurn = Direction.Right;
                     break;
                 case ConsoleKey.LeftArrow:
-                    _state.Direction = Direction.Left;
+                    _state.PacManNextTurn = Direction.Left;
                     break;
                 case ConsoleKey.UpArrow:
-                    _state.Direction = Direction.Up;
+                    _state.PacManNextTurn = Direction.Up;
                     break;
                 case ConsoleKey.DownArrow:
-                    _state.Direction = Direction.Down;
+                    _state.PacManNextTurn = Direction.Down;
                     break;
                 default:
-                    _state.Direction = Direction.None;
+                    _state.PacManNextTurn = Direction.None;
                     break;
             }
         }
