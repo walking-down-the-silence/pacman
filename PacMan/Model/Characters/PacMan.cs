@@ -28,7 +28,7 @@ namespace PacMan
             var currentTile = context.Map[currentVertex.Y, currentVertex.X];
 
             // check if ghost needs to change the direction
-            if (Position == currentTile.Position)
+            if (Position.Equals(currentTile.Position))
             {
                 var graph = context.Map.AsGraph();
 

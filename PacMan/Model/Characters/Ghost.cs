@@ -92,7 +92,7 @@ namespace PacMan
             var currentTile = context.Map[currentVertex.Y, currentVertex.X];
 
             // check if ghost needs to change the direction
-            if (Position == currentTile.Position)
+            if (Position.Equals(currentTile.Position))
             {
                 CheckTimeoutBeforeBeingComforted(DateTime.Now);
                 CheckTimeoutBeforeChangingMode(DateTime.Now);
@@ -133,7 +133,7 @@ namespace PacMan
                 {
                     // current tile is the tile in which we need to decide where to go/turn
                     // TODO: check the direction accroding to the priorities below
-                    // var priorityDirections = new[] { Direction.Up, Direction.Left, Direction.Down };
+                    // Direction.Up, Direction.Left, Direction.Down
                     var targetDirection = allowedDirections
                         .Select(direction => Position.Shift(direction.ToOffset()))
                         .OrderBy(neighbor => neighbor.EuclideanDistance(target))

@@ -26,9 +26,7 @@ namespace PacMan
 
         public IPacMan PacMan => All.OfType<IPacMan>().Single();
 
-        public IReadOnlyCollection<IGhost> Ghosts => All.OfType<IGhost>().ToList();
-
-        public IReadOnlyCollection<ICheckpoint> Checkpoints => All.OfType<ICheckpoint>().ToList();
+        public IEnumerable<IGhost> Ghosts => All.OfType<IGhost>();
 
         public IGraph AsGraph() => _graph;
     }

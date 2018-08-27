@@ -48,27 +48,29 @@ namespace PacMan
                 .OfType<IEatable>()
                 .ToList()
                 .ForEach(eatable =>
-                {
-                    _map.PacMan.Effect(new FoodContext(_eventSink, _map, _gameState, eatable));
-                    eatable.Effect(new FoodContext(_eventSink, _map, _gameState, _map.PacMan));
-                });
+                    {
+                        _map.PacMan.Effect(new FoodContext(_eventSink, _map, _gameState, eatable));
+                        eatable.Effect(new FoodContext(_eventSink, _map, _gameState, _map.PacMan));
+                    });
 
             _map.All
                 .OfType<IRespawnSprite>()
                 .ToList()
                 .ForEach(respawn =>
-                    _map.Ghosts
-                        .Where(ghost => ghost.Mode == GhostMode.Dead)
-                        .Where(ghost => _overlappingStrategy.Overlap(respawn, ghost))
-                        .ToList()
-                        .ForEach(ghost => respawn.Execute(new GhostRespawnContext(ghost))));
+                    {
+                        _map.Ghosts
+                            .Where(ghost => ghost.Mode == GhostMode.Dead)
+                            .Where(ghost => _overlappingStrategy.Overlap(respawn, ghost))
+                            .ToList()
+                            .ForEach(ghost => respawn.Effect(new GhostRespawnContext(ghost)));
+                    });
 
             // TODO: do the movement in a separate timers to simulate different speeds
             var selfMovementContext = new SelfMovementContext(_eventSink, _map, _gameState, _lastUpdateTime);
             _map.PacMan.Move(selfMovementContext);
             _map.PacMan.Move(selfMovementContext);
             _map.Ghosts.ToList().ForEach(ghost => ghost.Move(selfMovementContext));
-            
+
             _lastUpdateTime = DateTime.Now;
             return Task.CompletedTask;
         }

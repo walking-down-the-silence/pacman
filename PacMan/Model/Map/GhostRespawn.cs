@@ -7,7 +7,7 @@
         {
         }
 
-        public void Execute(GhostRespawnContext context)
+        public void Effect(GhostRespawnContext context)
         {
             if (context.Ghost.Mode == GhostMode.Dead)
             {

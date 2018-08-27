@@ -90,6 +90,7 @@ Temporary Items
 #Visual Studio Files
 *.suo
 .vs/
+.sonarqube/
 bin/
 obj/
 packages/

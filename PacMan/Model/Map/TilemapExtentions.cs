@@ -4,7 +4,7 @@
     {
         public static ISprite ToSprite(this ITilemap map, Offset offset)
         {
-            Color[,] currentView = new Color[map.Size.Height * 8, map.Size.Width * 8];
+            var currentView = new Color[map.Size.Height * 8, map.Size.Width * 8];
 
             foreach (ISprite sprite in map.All)
             {

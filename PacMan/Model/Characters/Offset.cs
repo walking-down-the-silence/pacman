@@ -17,10 +17,6 @@ namespace PacMan
 
         public int Top { get; }
 
-        public static bool operator ==(Offset offset1, Offset offset2) => InternalEquals(offset1, offset2);
-
-        public static bool operator !=(Offset offset1, Offset offset2) => !InternalEquals(offset1, offset2);
-
         public override bool Equals(object obj) => (obj is Offset other) && InternalEquals(this, other);
 
         public override int GetHashCode() => Left ^ Top;
@@ -48,8 +44,8 @@ namespace PacMan
         private static bool InternalEquals(Offset offset1, Offset offset2)
         {
             return ReferenceEquals(offset1, offset2)
-                || ((object)offset1 != null
-                    && (object)offset2 != null
+                || (offset1 != null
+                    && offset2 != null
                     && offset1.Left == offset2.Left
                     && offset1.Top == offset2.Top);
         }

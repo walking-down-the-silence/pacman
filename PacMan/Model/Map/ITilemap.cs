@@ -12,7 +12,7 @@ namespace PacMan
 
         IPacMan PacMan { get; }
 
-        IReadOnlyCollection<IGhost> Ghosts { get; }
+        IEnumerable<IGhost> Ghosts { get; }
 
         IGraph AsGraph();
     }
