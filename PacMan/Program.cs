@@ -7,6 +7,11 @@ namespace PacMan
 {
     internal static partial class Program
     {
+        private static int _bufferHeight;
+        private static int _bufferWidth;
+        private static int _windowHeight;
+        private static int _windowWidth;
+
         public static async Task Main(string[] args)
         {
             var serviceCollection = new ServiceCollection();
@@ -19,6 +24,8 @@ namespace PacMan
             await serviceProvider
                 .GetService<IGameEngine<ConsoleContext>>()
                 .Run(new ConsoleContext(50, 0, 0), cts.Token);
+
+            Restore(serviceProvider);
         }
 
         public static void ConfigureServices(IServiceCollection services)
@@ -33,9 +40,20 @@ namespace PacMan
 
         public static void Configure(IServiceProvider serviceProvider)
         {
+            _bufferHeight = Console.BufferHeight;
+            _bufferWidth = Console.BufferWidth;
+            _windowHeight = Console.WindowHeight;
+            _windowWidth = Console.WindowWidth;
+            Console.SetBufferSize(276, 157);
             Console.SetWindowSize(266, 147);
             Console.SetWindowPosition(0, 0);
             Console.Title = "Pac-Man";
+        }
+
+        public static void Restore(IServiceProvider serviceProvider)
+        {
+            Console.SetBufferSize(_bufferHeight, _bufferWidth);
+            Console.SetWindowSize(_windowHeight, _windowWidth);
         }
     }
 }

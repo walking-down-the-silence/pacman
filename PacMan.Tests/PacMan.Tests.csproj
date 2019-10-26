@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PacMan\PacMan.csproj" />
+    <ProjectReference Include="..\PacMan\PacMan.Console.csproj" />
   </ItemGroup>
 
 </Project>

@@ -443,10 +443,10 @@
     </grid>
 
     <ghosts>
-        <ghost row="10" column="9" class="shadow" />
-        <ghost row="10" column="10" class="speedy" />
-        <ghost row="10" column="11" class="bashful" />
-        <ghost row="9" column="10" class="pokey" />
+        <ghost row="10" column="9" class="shadow"></ghost>
+        <ghost row="10" column="10" class="speedy"></ghost>
+        <ghost row="10" column="11" class="bashful"></ghost>
+        <ghost row="9" column="10" class="pokey"></ghost>
     </ghosts>
 
     <pacman row="16" column="10">
@@ -514,7 +514,9 @@
         ghost {
             height: 15px;
             width: 15px;
-            border-radius: 50%;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            display: inline-block;
         }
 
             ghost.bashful {

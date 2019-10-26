@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>PacMan.Console</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PacMan.Core.DataStructures\PacMan.Core.DataStructures.csproj" />
     <ProjectReference Include="..\PacMan.Core.Primitives\PacMan.Core.Primitives.csproj" />
+    <ProjectReference Include="..\PacMan.Engine\PacMan.Engine.csproj" />
     <ProjectReference Include="..\PacMan.Rendering.Console\PacMan.Rendering.Console.csproj" />
   </ItemGroup>
 

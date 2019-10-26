@@ -7,9 +7,9 @@ namespace PacMan
         IHandler<CherryEaten>
     {
         private readonly ITilemap _tilemap;
-        private readonly IGameEngine<ConsoleContext> _gameEngine;
+        private readonly IGameEngine<IGameContext> _gameEngine;
 
-        public FoodMonitorHandler(ITilemap tilemap, IGameEngine<ConsoleContext> gameEngine)
+        public FoodMonitorHandler(ITilemap tilemap, IGameEngine<IGameContext> gameEngine)
         {
             _tilemap = tilemap;
             _gameEngine = gameEngine;

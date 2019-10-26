@@ -1,6 +1,6 @@
 ﻿namespace PacMan
 {
-    public class ConsoleContext
+    public class ConsoleContext : IGameContext
     {
         public ConsoleContext(int fps, int offsetX, int offsetY)
         {

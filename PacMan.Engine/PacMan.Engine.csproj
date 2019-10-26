@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PacMan.Core.DataStructures\PacMan.Core.DataStructures.csproj" />
+    <ProjectReference Include="..\PacMan.Core.Physics\PacMan.Core.Physics.csproj" />
+    <ProjectReference Include="..\PacMan.Core.Primitives\PacMan.Core.Primitives.csproj" />
+    <ProjectReference Include="..\PacMan.Rendering.Console\PacMan.Rendering.Console.csproj" />
+  </ItemGroup>
+
+</Project>
