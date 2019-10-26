@@ -1,3 +1,3 @@
 dotnet sonarscanner begin /k:"pacman-game-web"
-dotnet build
+dotnet build ..\PacMan.sln
 dotnet sonarscanner end

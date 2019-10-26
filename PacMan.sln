@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Console", "PacMan\PacMan.Console.csproj", "{78AB7163-13DD-434E-ADB8-D6EA79A61F2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Console", "src\PacMan.Console\PacMan.Console.csproj", "{78AB7163-13DD-434E-ADB8-D6EA79A61F2D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Web", "PacMan.Web\PacMan.Web.csproj", "{CEABB02B-9156-440D-A830-6F90707A77E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Web", "src\PacMan.Web\PacMan.Web.csproj", "{CEABB02B-9156-440D-A830-6F90707A77E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Tests", "PacMan.Tests\PacMan.Tests.csproj", "{ABCB0514-7916-4F44-9FE7-136654546B35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Tests", "tests\PacMan.Tests\PacMan.Tests.csproj", "{ABCB0514-7916-4F44-9FE7-136654546B35}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Rendering.Console", "PacMan.Rendering.Console\PacMan.Rendering.Console.csproj", "{219C5611-EDB7-453A-9AA2-C6AE49A2349F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Rendering.Console", "src\PacMan.Rendering.Console\PacMan.Rendering.Console.csproj", "{219C5611-EDB7-453A-9AA2-C6AE49A2349F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.Primitives", "PacMan.Core.Primitives\PacMan.Core.Primitives.csproj", "{94CF895C-BD34-4B29-B55B-DB118A130A13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.Primitives", "src\PacMan.Core.Primitives\PacMan.Core.Primitives.csproj", "{94CF895C-BD34-4B29-B55B-DB118A130A13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.Physics", "PacMan.Core.Physics\PacMan.Core.Physics.csproj", "{717F7358-5631-4BC7-BEF7-51FFCAC500A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.Physics", "src\PacMan.Core.Physics\PacMan.Core.Physics.csproj", "{717F7358-5631-4BC7-BEF7-51FFCAC500A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Core.DataStructures", "PacMan.Core.DataStructures\PacMan.Core.DataStructures.csproj", "{A4218597-6347-49AC-A0F9-3C32CCF46FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Core.DataStructures", "src\PacMan.Core.DataStructures\PacMan.Core.DataStructures.csproj", "{A4218597-6347-49AC-A0F9-3C32CCF46FEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Engine", "src\PacMan.Engine\PacMan.Engine.csproj", "{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{842478CB-E1FB-4426-9B37-B82B502176F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4515E888-D90B-4DD0-B8CC-B7CD739A2CDA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Engine", "PacMan.Engine\PacMan.Engine.csproj", "{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
