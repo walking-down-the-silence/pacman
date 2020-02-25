@@ -16,14 +16,13 @@ namespace PacMan
             {
                 foreach (var actor2 in actors)
                 {
-                    if (ReferenceEquals(actor1, actor2))
-                        continue;
-
                     // run a broad phase of collision detection
                     // and narrow the objects that are potentially colliding
                     // run a narrow phase of collision detection
-                    // and execute the logic for detecting objects
-                    if (_broadPhase.Overlap(actor1, actor2) && _narrowPhase.Overlap(actor1, actor2))
+                    // and execute the logic for detecting objects 
+                    if (!ReferenceEquals(actor1, actor2)
+                        && _broadPhase.Overlap(actor1, actor2)
+                        && _narrowPhase.Overlap(actor1, actor2))
                     {
                         collisions.Add((actor1, actor2));
                     }
