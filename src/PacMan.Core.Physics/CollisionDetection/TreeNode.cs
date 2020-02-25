@@ -13,7 +13,7 @@ namespace PacMan.Core.DataStructures.Trees
         {
             Left = left ?? throw new ArgumentNullException(nameof(left));
             Right = right ?? throw new ArgumentNullException(nameof(right));
-            Value = AxisAlignedBoundingBox.Combine(left.Value, right.Value);
+            Value = left.Value.Combine(right.Value);
         }
 
         public AxisAlignedBoundingBox Value { get; }
@@ -21,5 +21,7 @@ namespace PacMan.Core.DataStructures.Trees
         public TreeNode Left { get; }
 
         public TreeNode Right { get; }
+
+        public bool IsLeaf => Value != null && Left == null && Right == null;
     }
 }

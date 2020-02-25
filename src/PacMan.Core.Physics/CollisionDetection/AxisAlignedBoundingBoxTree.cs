@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PacMan.Core.DataStructures.Trees
 {
@@ -14,30 +16,52 @@ namespace PacMan.Core.DataStructures.Trees
             return new AxisAlignedBoundingBoxTree(new TreeNode(value));
         }
 
-        public AxisAlignedBoundingBoxTree Insert(AxisAlignedBoundingBox value)
+        public ICollection<AxisAlignedBoundingBox> Find(AxisAlignedBoundingBox box)
         {
-            if (value == null) throw new ArgumentNullException(nameof(value));
-            return new AxisAlignedBoundingBoxTree(InternalInsert(Root, value));
+            if (box == null) throw new ArgumentNullException(nameof(box));
+            return InternalFind(Root, box).ToList();
         }
 
-        private TreeNode InternalInsert(TreeNode node, AxisAlignedBoundingBox value)
+        public AxisAlignedBoundingBoxTree Insert(AxisAlignedBoundingBox box)
+        {
+            if (box == null) throw new ArgumentNullException(nameof(box));
+            return new AxisAlignedBoundingBoxTree(InternalInsert(Root, box));
+        }
+
+        private IEnumerable<AxisAlignedBoundingBox> InternalFind(TreeNode node, AxisAlignedBoundingBox box)
+        {
+            if (node.Value.Overlap(box))
+            {
+                if (node.IsLeaf)
+                {
+                    yield return node.Value;
+                }
+                else
+                {
+                    foreach (var value in InternalFind(node.Left, box)) yield return value;
+                    foreach (var value in InternalFind(node.Right, box)) yield return value;
+                }
+            }
+        }
+
+        private TreeNode InternalInsert(TreeNode node, AxisAlignedBoundingBox box)
         {
             if (node == null)
             {
-                return new TreeNode(value);
+                return new TreeNode(box);
             }
             else if (node.Left != null && node.Right != null)
             {
-                var rightBox = AxisAlignedBoundingBox.Combine(value, node.Right.Value);
-                var leftBox = AxisAlignedBoundingBox.Combine(value, node.Left.Value);
+                var rightBox = box.Combine(node.Right.Value);
+                var leftBox = box.Combine(node.Left.Value);
                 return rightBox.Volume < leftBox.Volume
-                    ? new TreeNode(node.Left, InternalInsert(node.Right, value))
-                    : new TreeNode(InternalInsert(node.Left, value), node.Right);
+                    ? new TreeNode(node.Left, InternalInsert(node.Right, box))
+                    : new TreeNode(InternalInsert(node.Left, box), node.Right);
             }
             else
             {
                 var left = new TreeNode(node.Value);
-                var right = new TreeNode(value);
+                var right = new TreeNode(box);
                 return new TreeNode(left, right);
             }
         }
