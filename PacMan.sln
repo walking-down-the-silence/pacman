@@ -15,13 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.Primitives", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.Physics", "src\PacMan.Core.Physics\PacMan.Core.Physics.csproj", "{717F7358-5631-4BC7-BEF7-51FFCAC500A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Core.DataStructures", "src\PacMan.Core.DataStructures\PacMan.Core.DataStructures.csproj", "{A4218597-6347-49AC-A0F9-3C32CCF46FEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Core.DataStructures", "src\PacMan.Core.DataStructures\PacMan.Core.DataStructures.csproj", "{A4218597-6347-49AC-A0F9-3C32CCF46FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Engine", "src\PacMan.Engine\PacMan.Engine.csproj", "{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacMan.Engine", "src\PacMan.Engine\PacMan.Engine.csproj", "{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{842478CB-E1FB-4426-9B37-B82B502176F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4515E888-D90B-4DD0-B8CC-B7CD739A2CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacMan.Core.Physics.Tests", "tests\PacMan.Core.Physics.Tests\PacMan.Core.Physics.Tests.csproj", "{8DCB2461-49AA-4FEC-90DB-EFAA0EB50012}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DCB2461-49AA-4FEC-90DB-EFAA0EB50012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DCB2461-49AA-4FEC-90DB-EFAA0EB50012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DCB2461-49AA-4FEC-90DB-EFAA0EB50012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DCB2461-49AA-4FEC-90DB-EFAA0EB50012}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{717F7358-5631-4BC7-BEF7-51FFCAC500A7} = {4515E888-D90B-4DD0-B8CC-B7CD739A2CDA}
 		{A4218597-6347-49AC-A0F9-3C32CCF46FEB} = {4515E888-D90B-4DD0-B8CC-B7CD739A2CDA}
 		{8DAB75C1-77F7-4C0B-924F-C0CB0EB88FBC} = {4515E888-D90B-4DD0-B8CC-B7CD739A2CDA}
+		{8DCB2461-49AA-4FEC-90DB-EFAA0EB50012} = {842478CB-E1FB-4426-9B37-B82B502176F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7999874D-B51F-44F9-B4D6-886371A273CA}

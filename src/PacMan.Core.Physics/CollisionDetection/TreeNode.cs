@@ -9,11 +9,11 @@ namespace PacMan.Core.DataStructures.Trees
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public TreeNode(AxisAlignedBoundingBox value, TreeNode left, TreeNode right)
+        public TreeNode(TreeNode left, TreeNode right)
         {
-            Value = value ?? throw new ArgumentNullException(nameof(value));
             Left = left ?? throw new ArgumentNullException(nameof(left));
             Right = right ?? throw new ArgumentNullException(nameof(right));
+            Value = AxisAlignedBoundingBox.Combine(left.Value, right.Value);
         }
 
         public AxisAlignedBoundingBox Value { get; }

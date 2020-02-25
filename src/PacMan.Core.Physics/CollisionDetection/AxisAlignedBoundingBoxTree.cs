@@ -8,13 +8,15 @@ namespace PacMan.Core.DataStructures.Trees
 
         public TreeNode Root { get; }
 
-        public AxisAlignedBoundingBoxTree FromValue(AxisAlignedBoundingBox value)
+        public static AxisAlignedBoundingBoxTree FromValue(AxisAlignedBoundingBox value)
         {
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return new AxisAlignedBoundingBoxTree(new TreeNode(value));
         }
 
         public AxisAlignedBoundingBoxTree Insert(AxisAlignedBoundingBox value)
         {
+            if (value == null) throw new ArgumentNullException(nameof(value));
             return new AxisAlignedBoundingBoxTree(InternalInsert(Root, value));
         }
 
@@ -26,28 +28,18 @@ namespace PacMan.Core.DataStructures.Trees
             }
             else if (node.Left != null && node.Right != null)
             {
-                var rightBox = Combine(value, node.Right.Value);
-                var leftBox = Combine(value, node.Left.Value);
+                var rightBox = AxisAlignedBoundingBox.Combine(value, node.Right.Value);
+                var leftBox = AxisAlignedBoundingBox.Combine(value, node.Left.Value);
                 return rightBox.Volume < leftBox.Volume
-                    ? InternalInsert(node.Right, value)
-                    : InternalInsert(node.Left, value);
+                    ? new TreeNode(node.Left, InternalInsert(node.Right, value))
+                    : new TreeNode(InternalInsert(node.Left, value), node.Right);
             }
             else
             {
                 var left = new TreeNode(node.Value);
                 var right = new TreeNode(value);
-                var boundingBox = Combine(left.Value, right.Value);
-                return new TreeNode(boundingBox, left, right);
+                return new TreeNode(left, right);
             }
-        }
-
-        private AxisAlignedBoundingBox Combine(AxisAlignedBoundingBox first, AxisAlignedBoundingBox second)
-        {
-            int left = Math.Min(first.LeftBottom.X, second.LeftBottom.X);
-            int bottom = Math.Min(first.LeftBottom.Y, second.LeftBottom.Y);
-            int right = Math.Max(first.RightTop.X, second.RightTop.X);
-            int top = Math.Max(first.RightTop.Y, second.RightTop.Y);
-            return new AxisAlignedBoundingBox(new Vector2D(left, bottom), new Vector2D(right, top));
         }
     }
 }
