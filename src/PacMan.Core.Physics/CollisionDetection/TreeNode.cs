@@ -2,26 +2,29 @@
 
 namespace PacMan.Core.DataStructures.Trees
 {
-    public class TreeNode
+    public class TreeNode<TValue> where TValue : class
     {
-        public TreeNode(AxisAlignedBoundingBox value)
+        public TreeNode(TValue value, AxisAlignedBoundingBox box)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
+            Box = box ?? throw new ArgumentNullException(nameof(box));
         }
 
-        public TreeNode(TreeNode left, TreeNode right)
+        public TreeNode(TreeNode<TValue> left, TreeNode<TValue> right)
         {
             Left = left ?? throw new ArgumentNullException(nameof(left));
             Right = right ?? throw new ArgumentNullException(nameof(right));
-            Value = left.Value.Combine(right.Value);
+            Box = AxisAlignedBoundingBoxExtentions.Combine(left.Box, right.Box);
         }
 
-        public AxisAlignedBoundingBox Value { get; }
+        public TValue Value { get; }
 
-        public TreeNode Left { get; }
+        public AxisAlignedBoundingBox Box { get; }
 
-        public TreeNode Right { get; }
+        public TreeNode<TValue> Left { get; }
 
-        public bool IsLeaf => Value != null && Left == null && Right == null;
+        public TreeNode<TValue> Right { get; }
+
+        public bool IsLeaf => Value != null && Box != null && Left == null && Right == null;
     }
 }

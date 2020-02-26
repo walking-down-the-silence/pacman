@@ -16,9 +16,6 @@
 
         public Size Size => _currentFrame.Size;
 
-        protected void SetCurrentFrame(IFrame frame)
-        {
-            _currentFrame = frame;
-        }
+        protected void SetCurrentFrame(IFrame frame) => _currentFrame = frame;
     }
 }

@@ -4,6 +4,6 @@ namespace PacMan
 {
     public interface ICollisionDetection
     {
-        ICollection<(ISprite one, ISprite two)> DetectCollisions(ICollection<ISprite> actors);
+        IDictionary<ISprite, ICollection<ISprite>> DetectCollisions(ICollection<ISprite> sprites);
     }
 }

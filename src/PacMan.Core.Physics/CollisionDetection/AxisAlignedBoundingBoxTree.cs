@@ -4,33 +4,35 @@ using System.Linq;
 
 namespace PacMan.Core.DataStructures.Trees
 {
-    public class AxisAlignedBoundingBoxTree
+    public class AxisAlignedBoundingBoxTree<TValue> where TValue : class, IAxisAlignedBoundingBoxContainer
     {
-        private AxisAlignedBoundingBoxTree(TreeNode root) => Root = root;
+        private AxisAlignedBoundingBoxTree(TreeNode<TValue> root) => Root = root;
 
-        public TreeNode Root { get; }
+        public TreeNode<TValue> Root { get; }
 
-        public static AxisAlignedBoundingBoxTree FromValue(AxisAlignedBoundingBox value)
+        public static AxisAlignedBoundingBoxTree<TValue> Empty => new AxisAlignedBoundingBoxTree<TValue>(null);
+
+        public static AxisAlignedBoundingBoxTree<TValue> FromValue(TValue value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
-            return new AxisAlignedBoundingBoxTree(new TreeNode(value));
+            return new AxisAlignedBoundingBoxTree<TValue>(new TreeNode<TValue>(value, value.Box));
         }
 
-        public ICollection<AxisAlignedBoundingBox> Find(AxisAlignedBoundingBox box)
+        public ICollection<TValue> Find(TValue value)
         {
-            if (box == null) throw new ArgumentNullException(nameof(box));
-            return InternalFind(Root, box).ToList();
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            return InternalFind(Root, value.Box).ToList();
         }
 
-        public AxisAlignedBoundingBoxTree Insert(AxisAlignedBoundingBox box)
+        public AxisAlignedBoundingBoxTree<TValue> Insert(TValue value)
         {
-            if (box == null) throw new ArgumentNullException(nameof(box));
-            return new AxisAlignedBoundingBoxTree(InternalInsert(Root, box));
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            return new AxisAlignedBoundingBoxTree<TValue>(InternalInsert(Root, value));
         }
 
-        private IEnumerable<AxisAlignedBoundingBox> InternalFind(TreeNode node, AxisAlignedBoundingBox box)
+        private IEnumerable<TValue> InternalFind(TreeNode<TValue> node, AxisAlignedBoundingBox box)
         {
-            if (node.Value.Overlap(box))
+            if (node.Box.Overlap(box))
             {
                 if (node.IsLeaf)
                 {
@@ -44,25 +46,25 @@ namespace PacMan.Core.DataStructures.Trees
             }
         }
 
-        private TreeNode InternalInsert(TreeNode node, AxisAlignedBoundingBox box)
+        private TreeNode<TValue> InternalInsert(TreeNode<TValue> node, TValue value)
         {
             if (node == null)
             {
-                return new TreeNode(box);
+                return new TreeNode<TValue>(value, value.Box);
             }
             else if (node.Left != null && node.Right != null)
             {
-                var rightBox = box.Combine(node.Right.Value);
-                var leftBox = box.Combine(node.Left.Value);
+                var rightBox = value.Box.Combine(node.Right.Box);
+                var leftBox = value.Box.Combine(node.Left.Box);
                 return rightBox.Volume < leftBox.Volume
-                    ? new TreeNode(node.Left, InternalInsert(node.Right, box))
-                    : new TreeNode(InternalInsert(node.Left, box), node.Right);
+                    ? new TreeNode<TValue>(node.Left, InternalInsert(node.Right, value))
+                    : new TreeNode<TValue>(InternalInsert(node.Left, value), node.Right);
             }
             else
             {
-                var left = new TreeNode(node.Value);
-                var right = new TreeNode(box);
-                return new TreeNode(left, right);
+                var left = node;
+                var right = new TreeNode<TValue>(value, value.Box);
+                return new TreeNode<TValue>(left, right);
             }
         }
     }
