@@ -13,37 +13,33 @@ namespace PacMan
     /// </summary>
     public class TwoPhaseCollisionDetection : ICollisionDetection
     {
+        private readonly IOverlappingStrategy _narrowPhase = new PixelPerfectOverlapCheck();
+
         public IDictionary<ISprite, ICollection<ISprite>> DetectCollisions(ICollection<ISprite> sprites)
         {
-            var narrowPhase = new PixelPerfectOverlapCheck();
             var wrappers = sprites.Select(sprite => new SpriteWrapper(sprite)).ToList();
             var seed = AxisAlignedBoundingBoxTree<SpriteWrapper>.Empty;
             var tree = ConstructTreeRecursively(seed, wrappers.GetEnumerator());
-            return wrappers.ToDictionary(key => key.Sprite, wrapper =>
-                    {
-                        ICollection<ISprite> collisions = tree
-                            .Find(wrapper)
-                            .Where(collision => narrowPhase.Overlap(wrapper.Sprite, collision.Sprite))
-                            .Select(x => x.Sprite)
-                            .ToList();
-
-                        return collisions;
-                    });
+            return wrappers.ToDictionary(key => key.Sprite, value => InternalDetectCollisions(tree, value));
         }
 
-        private AxisAlignedBoundingBoxTree<TValue> ConstructTreeRecursively<TValue>(
-            AxisAlignedBoundingBoxTree<TValue> tree,
-            IEnumerator<TValue> actors)
-            where TValue : class, IAxisAlignedBoundingBoxContainer
+        public ICollection<ISprite> DetectCollisions(ISprite target, ICollection<ISprite> sprites)
         {
-            if (actors.MoveNext())
-            {
-                var next = tree.Insert(actors.Current);
-                return ConstructTreeRecursively(next, actors);
-            }
-
-            return tree;
+            var wrappers = sprites.Select(sprite => new SpriteWrapper(sprite)).ToList();
+            var seed = AxisAlignedBoundingBoxTree<SpriteWrapper>.Empty;
+            var tree = ConstructTreeRecursively(seed, wrappers.GetEnumerator());
+            return InternalDetectCollisions(tree, new SpriteWrapper(target));
         }
+
+        private ICollection<ISprite> InternalDetectCollisions(AxisAlignedBoundingBoxTree<SpriteWrapper> tree, SpriteWrapper target) =>
+            tree.Find(target)
+                .Where(collision => _narrowPhase.Overlap(target.Sprite, collision.Sprite))
+                .Select(wrapper => wrapper.Sprite)
+                .ToList();
+
+        private AxisAlignedBoundingBoxTree<TValue> ConstructTreeRecursively<TValue>(AxisAlignedBoundingBoxTree<TValue> tree, IEnumerator<TValue> actors)
+            where TValue : class, IAxisAlignedBoundingBoxContainer =>
+            actors.MoveNext() ? ConstructTreeRecursively(tree.Insert(actors.Current), actors) : tree;
 
         private class SpriteWrapper : IAxisAlignedBoundingBoxContainer
         {

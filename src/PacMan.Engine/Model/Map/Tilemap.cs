@@ -11,7 +11,6 @@ namespace PacMan
         {
             _graph = new AdjacentMatrixGraph(size.Height, size.Width);
             Size = size;
-            All = new List<ISprite>();
         }
 
         public Tile this[int row, int column]
@@ -22,7 +21,7 @@ namespace PacMan
 
         public Size Size { get; }
 
-        public ICollection<ISprite> All { get; private set; }
+        public ICollection<ISprite> All { get; } = new List<ISprite>();
 
         public IPacMan PacMan => All.OfType<IPacMan>().Single();
 

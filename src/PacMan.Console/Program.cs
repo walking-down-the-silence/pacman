@@ -33,7 +33,6 @@ namespace PacMan
             services.AddSingleton<IEventSink, EventSink>()
                 .AddSingleton<IMapLoader<ITilemap>, MapLoader>()
                 .AddSingleton<ICollisionDetection, TwoPhaseCollisionDetection>()
-                .AddSingleton<IOverlappingStrategy, PixelPerfectOverlapCheck>()
                 .AddSingleton<ISpriteRenderer>(new SpriteDifferenceRenderer(new ConsoleSpriteRenderer()))
                 .AddSingleton<IGameEngine<ConsoleContext>, PacManGame>();
         }

@@ -32,7 +32,7 @@ namespace PacMan.Core.DataStructures.Trees
 
         private IEnumerable<TValue> InternalFind(TreeNode<TValue> node, AxisAlignedBoundingBox box)
         {
-            if (node.Box.Overlap(box))
+            if (node != null && node.Box.Overlap(box))
             {
                 if (node.IsLeaf)
                 {
