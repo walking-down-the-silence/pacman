@@ -9,18 +9,18 @@ namespace PacMan
         private readonly IFrame _normalStateFrame;
         private readonly IFrame _deadStateFrame;
         private readonly IFrame _frightenedStateFrame;
-        private readonly IGhostMode _patrollingMode;
-        private readonly IGhostMode _chasingMode;
-        private readonly IGhostMode _frightenedMode;
-        private readonly IGhostMode _deadMode;
+        private readonly IGhostMovementStrategy _patrollingMode;
+        private readonly IGhostMovementStrategy _chasingMode;
+        private readonly IGhostMovementStrategy _frightenedMode;
+        private readonly IGhostMovementStrategy _deadMode;
         private readonly int[] _changingModesTimeout = { 7, 20, 7, 20, 5, 20, 5, int.MaxValue };
         private readonly int _frightenedTimeout = 10;
-        private IGhostMode _currentMode;
+        private IGhostMovementStrategy _currentMode;
         private DateTime _lastSwitchedTime;
         private DateTime _lastFrightenedTime;
         private int _timeoutsIndex = 0;
 
-        protected Ghost(Offset position, Color color, Offset patrollingTarget, IGhostMode chasingMode) :
+        protected Ghost(Offset position, Color color, Offset patrollingTarget, IGhostMovementStrategy chasingMode) :
             base(position, new GhostNormalFrame(color))
         {
             _initialPosition = position;
@@ -88,7 +88,7 @@ namespace PacMan
         public void Move(SelfMovementContext context)
         {
             // get next target based on ghost mode and corresponding movement strategy
-            var currentVertex = Position.ToVertex();
+            var currentVertex = Position.ToTile();
             var currentTile = context.Map[currentVertex.Y, currentVertex.X];
 
             // check if ghost needs to change the direction
@@ -102,14 +102,13 @@ namespace PacMan
                 var ghostPosition = Position;
                 var ghostDirection = State.Direction;
 
-                var graph = context.Map.AsGraph();
+                var graph = context.Map;
                 var neighbors = graph.GetNeighbors(currentVertex)
                     .Where(neighbor => !neighbor.IsWall)
                     .ToList();
 
                 var allowedDirections = neighbors
-                    .Select(neighbor => neighbor.ToOffset())
-                    .Select(neighbor => ghostPosition.ToDirection(neighbor))
+                    .Select(neighbor => ghostPosition.ToDirection(neighbor.Position))
                     .Where(direction => direction != ghostDirection.ToOpposite())
                     .Where(direction => direction != currentTile.Restriction)
                     .ToList();
@@ -123,7 +122,7 @@ namespace PacMan
                 {
                     // there were no ways to go/turn, choosing the direction closest to target
                     var targetDirection = neighbors
-                        .Select(neighbor => neighbor.ToOffset())
+                        .Select(neighbor => neighbor.Position)
                         .OrderBy(neighbor => neighbor.EuclideanDistance(target))
                         .First();
 
@@ -144,7 +143,7 @@ namespace PacMan
             }
 
             var nextPosition = Position.Shift(State.Direction.ToOffset());
-            var afterVertex = nextPosition.ToVertex();
+            var afterVertex = nextPosition.ToTile();
             var afterTile = context.Map[afterVertex.Y, afterVertex.X];
             Position = afterTile.IsWall ? Position : nextPosition;
         }
@@ -160,7 +159,7 @@ namespace PacMan
 
         public void Effect(FoodContext context)
         {
-            if (context.Eatable is IPacMan pacMan
+            if (context.Eatable is IPacMan
                 && Mode == GhostMode.Frightened 
                 && Mode != GhostMode.Dead)
             {
@@ -194,7 +193,7 @@ namespace PacMan
             }
         }
         
-        private sealed class PatrolingMode : IGhostMode
+        private sealed class PatrolingMode : IGhostMovementStrategy
         {
             private readonly Offset _target;
 
@@ -203,31 +202,30 @@ namespace PacMan
             public Offset Execute(GhostMovementContext context) => _target;
         }
 
-        private sealed class DeadGhostMode : IGhostMode
+        private sealed class DeadGhostMode : IGhostMovementStrategy
         {
             private readonly Offset _respawnTarget = new Offset(9, 9).Extend(Tile.SIZE);
 
             public Offset Execute(GhostMovementContext context) => _respawnTarget;
         }
 
-        private sealed class RandomTurnsMode : IGhostMode
+        private sealed class RandomTurnsMode : IGhostMovementStrategy
         {
             private readonly Random _randomGenerator = new Random();
 
             public Offset Execute(GhostMovementContext context)
             {
-                var currentVertex = context.Ghost.Position.ToVertex();
+                var currentVertex = context.Ghost.Position.ToTile();
                 var currentTile = context.Map[currentVertex.Y, currentVertex.X];
                 var ghostPosition = context.Ghost.Position;
                 var ghostDirection = context.Ghost.State.Direction;
 
-                var neighbors = context.Map.AsGraph().GetNeighbors(currentVertex)
+                var neighbors = context.Map.GetNeighbors(currentVertex)
                     .Where(neighbor => !neighbor.IsWall)
                     .ToList();
 
                 var allowedDirections = neighbors
-                    .Select(neighbor => neighbor.ToOffset())
-                    .Select(neighbor => ghostPosition.ToDirection(neighbor))
+                    .Select(neighbor => ghostPosition.ToDirection(neighbor.Position))
                     .Where(direction => direction != ghostDirection.ToOpposite())
                     .Where(direction => direction != currentTile.Restriction)
                     .ToList();

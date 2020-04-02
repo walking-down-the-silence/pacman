@@ -2,12 +2,14 @@
 {
     public sealed class SpeedyGhost : Ghost
     {
+        private static readonly Offset _patrollingTarget = new Offset(2, -2).Extend(Tile.SIZE);
+
         public SpeedyGhost(Offset position) :
-            base(position, Color.Pink, new Offset(2, -2).Extend(Tile.SIZE), new SpeedyChasingMode())
+            base(position, Color.Pink, _patrollingTarget, new SpeedyChasingMode())
         {
         }
 
-        private sealed class SpeedyChasingMode : IGhostMode
+        private sealed class SpeedyChasingMode : IGhostMovementStrategy
         {
             public Offset Execute(GhostMovementContext context)
             {

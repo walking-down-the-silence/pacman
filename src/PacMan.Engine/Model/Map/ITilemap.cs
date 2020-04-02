@@ -13,7 +13,5 @@ namespace PacMan
         IPacMan PacMan { get; }
 
         IEnumerable<IGhost> Ghosts { get; }
-
-        IGraph AsGraph();
     }
 }

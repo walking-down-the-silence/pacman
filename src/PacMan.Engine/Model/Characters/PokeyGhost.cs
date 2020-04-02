@@ -2,14 +2,14 @@
 {
     public sealed class PokeyGhost : Ghost
     {
-        private static Offset _patrollingTarget = new Offset(0, 22).Extend(Tile.SIZE);
+        private static readonly Offset _patrollingTarget = new Offset(0, 22).Extend(Tile.SIZE);
 
         public PokeyGhost(Offset position) :
             base(position, Color.DarkYellow, _patrollingTarget, new PokeyChasingMode())
         {
         }
 
-        private sealed class PokeyChasingMode : IGhostMode
+        private sealed class PokeyChasingMode : IGhostMovementStrategy
         {
             public Offset Execute(GhostMovementContext context)
             {

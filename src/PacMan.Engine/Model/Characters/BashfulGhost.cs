@@ -4,12 +4,14 @@ namespace PacMan
 {
     public sealed class BashfulGhost : Ghost
     {
+        private static readonly Offset _patrollingTarget = new Offset(18, 22).Extend(Tile.SIZE);
+
         public BashfulGhost(Offset position) :
-            base(position, Color.Cyan, new Offset(18, 22).Extend(Tile.SIZE), new BashfulChasingMode())
+            base(position, Color.Cyan, _patrollingTarget, new BashfulChasingMode())
         {
         }
 
-        private sealed class BashfulChasingMode : IGhostMode
+        private sealed class BashfulChasingMode : IGhostMovementStrategy
         {
             public Offset Execute(GhostMovementContext context)
             {

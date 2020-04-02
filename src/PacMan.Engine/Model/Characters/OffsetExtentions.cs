@@ -67,15 +67,5 @@ namespace PacMan
                     return current.Minimum(target);
             }
         }
-
-        public static Vertex ToVertex(this ISprite sprite)
-        {
-            return new Vertex(sprite.Position.Top / 7, sprite.Position.Left / 7, false);
-        }
-
-        public static Vertex ToVertex(this Offset offset)
-        {
-            return new Vertex(offset.Top / 7, offset.Left / 7, false);
-        }
     }
 }

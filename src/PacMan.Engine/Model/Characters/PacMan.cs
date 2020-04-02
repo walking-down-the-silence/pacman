@@ -6,8 +6,7 @@ namespace PacMan
     {
         private readonly Offset _initialPosition;
 
-        public PacMan(Offset position) :
-            base(position, new PacManFrame())
+        public PacMan(Offset position) : base(position, new PacManFrame())
         {
             _initialPosition = position;
             State = new CharacterState();
@@ -24,18 +23,15 @@ namespace PacMan
         public void Move(SelfMovementContext context)
         {
             // get next target based on ghost mode and corresponding movement strategy
-            var currentVertex = Position.ToVertex();
+            var currentVertex = Position.ToTile();
             var currentTile = context.Map[currentVertex.Y, currentVertex.X];
 
             // check if ghost needs to change the direction
             if (Position.Equals(currentTile.Position))
             {
-                var graph = context.Map.AsGraph();
-
-                var allowedDirections = graph.GetNeighbors(currentVertex)
+                var allowedDirections = context.Map.GetNeighbors(currentVertex)
                     .Where(neighbor => !neighbor.IsWall)
-                    .Select(neighbor => neighbor.ToOffset())
-                    .Select(neighbor => Position.ToDirection(neighbor))
+                    .Select(neighbor => Position.ToDirection(neighbor.Position))
                     .ToList();
 
                 // specified direction is not allowed, so stop
@@ -47,7 +43,7 @@ namespace PacMan
             if (State.Direction != Direction.None)
             {
                 var nextPosition = Position.Shift(State.Direction.ToOffset());
-                var afterVertex = nextPosition.ToVertex();
+                var afterVertex = nextPosition.ToTile();
                 var afterTile = context.Map[afterVertex.Y, afterVertex.X];
                 Position = afterTile.IsWall ? Position : nextPosition;
             }

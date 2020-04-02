@@ -33,7 +33,7 @@ namespace PacMan
                 down
             };
 
-        public static IEnumerable<Vertex> GetNeighbors(this IGraph graph, Vertex node, bool includeDiagonals = false)
+        public static IEnumerable<Tile> GetNeighbors(this ITilemap graph, Tile node, bool includeDiagonals = false)
         {
             List<(int Left, int Top)> currentShift =
                 includeDiagonals
@@ -45,7 +45,7 @@ namespace PacMan
                 int y = node.Y + currentShift[i].Top;
                 int x = node.X + currentShift[i].Left;
 
-                if (x >= 0 && y >= 0 && x < graph.Width && y < graph.Height)
+                if (x >= 0 && y >= 0 && x < graph.Size.Width && y < graph.Size.Height)
                 {
                     yield return graph[y, x];
                 }

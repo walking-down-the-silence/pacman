@@ -5,18 +5,18 @@ namespace PacMan
 {
     public class Tilemap : ITilemap
     {
-        private readonly IGraph _graph;
+        private readonly Tile[,] _grid;
 
         public Tilemap(Size size)
         {
-            _graph = new AdjacentMatrixGraph(size.Height, size.Width);
+            _grid = new Tile[size.Height, size.Width];
             Size = size;
         }
 
         public Tile this[int row, int column]
         {
-            get { return _graph[row, column] as Tile; }
-            set { _graph[row, column] = value; }
+            get { return _grid[row, column]; }
+            set { _grid[row, column] = value; }
         }
 
         public Size Size { get; }
@@ -26,7 +26,5 @@ namespace PacMan
         public IPacMan PacMan => All.OfType<IPacMan>().Single();
 
         public IEnumerable<IGhost> Ghosts => All.OfType<IGhost>();
-
-        public IGraph AsGraph() => _graph;
     }
 }

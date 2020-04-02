@@ -18,15 +18,15 @@ namespace PacMan
                 Console.ResetColor();
                 Console.CursorVisible = false;
 
-                for (int y = 0; y < source.Size.Height; y++)
+                for (int row = 0; row < source.Size.Height; row++)
                 {
-                    for (int x = 0; x < source.Size.Width; x++)
+                    for (int column = 0; column < source.Size.Width; column++)
                     {
-                        if (source[y, x] != Color.None && source[y, x] != Color.Transparent)
+                        if (source[row, column] != Color.None && source[row, column] != Color.Transparent)
                         {
-                            Console.BackgroundColor = source[y, x].ToConsoleColor();
-                            int xPosition = (source.Position.Left + x) * emptyCell.Length;
-                            int yPosition = source.Position.Top + y;
+                            Console.BackgroundColor = source[row, column].ToConsoleColor();
+                            int xPosition = (source.Position.Left + column) * emptyCell.Length;
+                            int yPosition = source.Position.Top + row;
                             ConsoleExtentions.WriteAtPosition(xPosition, yPosition, emptyCell);
                         }
                     }
