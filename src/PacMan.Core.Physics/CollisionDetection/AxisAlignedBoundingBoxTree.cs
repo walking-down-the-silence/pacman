@@ -4,13 +4,9 @@ using System.Linq;
 
 namespace PacMan.Core.DataStructures.Trees
 {
-    public class AxisAlignedBoundingBoxTree<TValue> where TValue : class, IAxisAlignedBoundingBoxContainer
+    public sealed record AxisAlignedBoundingBoxTree<TValue>(TreeNode<TValue> Root) where TValue : class, IAxisAlignedBoundingBoxContainer
     {
-        private AxisAlignedBoundingBoxTree(TreeNode<TValue> root) => Root = root;
-
-        public TreeNode<TValue> Root { get; }
-
-        public static AxisAlignedBoundingBoxTree<TValue> Empty => new AxisAlignedBoundingBoxTree<TValue>(null);
+        public static AxisAlignedBoundingBoxTree<TValue> Empty => new AxisAlignedBoundingBoxTree<TValue>((TreeNode<TValue>)null);
 
         public static AxisAlignedBoundingBoxTree<TValue> FromValue(TValue value)
         {

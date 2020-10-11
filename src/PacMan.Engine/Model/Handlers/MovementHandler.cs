@@ -8,29 +8,20 @@ namespace PacMan
 
         public MovementHandler(GameState state)
         {
-            _state = state;
+            _state = state ?? throw new ArgumentNullException(nameof(state));
         }
 
         public void Handle(ConsoleKeyPressedEvent value)
         {
-            switch (value.ConsoleKey)
+            var direction = value.ConsoleKey switch
             {
-                case ConsoleKey.RightArrow:
-                    _state.PacManNextTurn = Direction.Right;
-                    break;
-                case ConsoleKey.LeftArrow:
-                    _state.PacManNextTurn = Direction.Left;
-                    break;
-                case ConsoleKey.UpArrow:
-                    _state.PacManNextTurn = Direction.Up;
-                    break;
-                case ConsoleKey.DownArrow:
-                    _state.PacManNextTurn = Direction.Down;
-                    break;
-                default:
-                    _state.PacManNextTurn = Direction.None;
-                    break;
-            }
+                ConsoleKey.RightArrow => Direction.Right,
+                ConsoleKey.LeftArrow => Direction.Left,
+                ConsoleKey.UpArrow => Direction.Up,
+                ConsoleKey.DownArrow => Direction.Down,
+                _ => Direction.None,
+            };
+            _state.SetNextDirection(direction);
         }
     }
 }

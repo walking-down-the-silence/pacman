@@ -1,12 +1,4 @@
 ﻿namespace PacMan
 {
-    public sealed class PelletEaten : Event
-    {
-        public PelletEaten(bool powerPellet)
-        {
-            PowerPellet = powerPellet;
-        }
-
-        public bool PowerPellet { get; }
-    }
+    public sealed record PelletEaten(bool PowerPellet) : IEvent;
 }

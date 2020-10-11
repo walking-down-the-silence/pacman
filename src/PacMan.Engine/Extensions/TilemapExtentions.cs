@@ -14,9 +14,6 @@
             return new GenericSprite(offset, currentView);
         }
 
-        public static ISprite ToSprite(this ITilemap map)
-        {
-            return ToSprite(map, Offset.Default);
-        }
+        public static ISprite ToSprite(this ITilemap map) => ToSprite(map, Offset.Default);
     }
 }

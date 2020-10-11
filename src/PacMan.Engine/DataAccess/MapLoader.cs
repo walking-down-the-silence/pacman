@@ -17,12 +17,12 @@ namespace PacMan
                 .ToList();
         }
 
-        private ITilemap LoadSingle(string filename)
+        private static ITilemap LoadSingle(string filename)
         {
             var map = Deserialize<Map>(File.ReadAllText(filename));
 
-            Size size = new Size(map.Grid.Width, map.Grid.Height);
-            Tilemap field = new Tilemap(size);
+            Size size = new(map.Grid.Width, map.Grid.Height);
+            Tilemap field = new(size);
 
             field.All.Add(CreatePacMan(map.Pacman));
             map.Ghosts.Ghost.ForEach(sprite => field.All.Add(CreateGhost(sprite)));
@@ -38,84 +38,68 @@ namespace PacMan
             return field;
         }
 
-        private Tile CreateCell(object parameter)
+        private static Direction GetDirection(DirectionValue direction)
+        {
+            return direction switch
+            {
+                DirectionValue.Left => Direction.Left,
+                DirectionValue.Up => Direction.Up,
+                DirectionValue.Right => Direction.Right,
+                DirectionValue.Down => Direction.Down,
+                _ => Direction.None,
+            };
+        }
+
+        private static ISprite CreateSprite(Offset position, object sprite)
+        {
+            return sprite switch
+            {
+                BrickCell => new Brick(position),
+                PelletCell { Class: PelletType.Normal } => new Pellet(position),
+                PelletCell { Class: PelletType.Power } => new PowerPellet(position),
+                RespawnCell => new GhostRespawn(position),
+                GateCell => null,
+                _ => throw new ArgumentOutOfRangeException(nameof(sprite)),
+            };
+        }
+
+        private static Tile CreateCell(object parameter)
         {
             if (parameter is Cell cell)
             {
                 int column = cell.Column - 1;
                 int row = cell.Row - 1;
-                Offset position = new Offset(column * SpriteSize, row * SpriteSize);
+                Offset position = new(column * SpriteSize, row * SpriteSize);
 
                 var sprite = cell.GetAtomicValues()
                     .Where(x => x != null)
                     .Select(x => CreateSprite(position, x))
                     .SingleOrDefault(x => x != null);
 
-                return new Tile(row, column, sprite, cell.Checkpoint, GetDirection(cell.Restriction));
+                return new(row, column, sprite, cell.Checkpoint, GetDirection(cell.Restriction));
             }
 
             return null;
         }
 
-        private Direction GetDirection(DirectionValue direction)
+        private static IPacMan CreatePacMan(PacManCell sprite)
         {
-            switch (direction)
-            {
-                case DirectionValue.Left:
-                    return Direction.Left;
-                case DirectionValue.Up:
-                    return Direction.Up;
-                case DirectionValue.Right:
-                    return Direction.Right;
-                case DirectionValue.Down:
-                    return Direction.Down;
-                default:
-                    return Direction.None;
-            }
-        }
-
-        private ISprite CreateSprite(Offset position, object sprite)
-        {
-            switch (sprite)
-            {
-                case BrickCell b:
-                    return new Brick(position);
-                case PelletCell p when p.Class == PelletType.Normal:
-                    return new Pellet(position);
-                case PelletCell p when p.Class == PelletType.Power:
-                    return new PowerPellet(position);
-                case RespawnCell r:
-                    return new GhostRespawn(position);
-                case GateCell c:
-                    return null;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private IPacMan CreatePacMan(PacManCell sprite)
-        {
-            Offset position = new Offset((sprite.Column - 1) * SpriteSize, (sprite.Row - 1) * SpriteSize);
+            Offset position = new((sprite.Column - 1) * SpriteSize, (sprite.Row - 1) * SpriteSize);
             return new PacMan(position);
         }
 
-        private IGhost CreateGhost(GhostCell sprite)
+        private static IGhost CreateGhost(GhostCell sprite)
         {
-            Offset position = new Offset((sprite.Column - 1) * SpriteSize, (sprite.Row - 1) * SpriteSize);
+            Offset position = new((sprite.Column - 1) * SpriteSize, (sprite.Row - 1) * SpriteSize);
 
-            switch (sprite)
+            return sprite switch
             {
-                case GhostCell g when g.Class == GhostType.Shadow:
-                    return new ShadowGhost(position);
-                case GhostCell g when g.Class == GhostType.Speedy:
-                    return new SpeedyGhost(position);
-                case GhostCell g when g.Class == GhostType.Bashful:
-                    return new BashfulGhost(position);
-                case GhostCell g when g.Class == GhostType.Pokey:
-                    return new PokeyGhost(position);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                { Class: GhostType.Shadow } => new ShadowGhost(position),
+                { Class: GhostType.Speedy } => new SpeedyGhost(position),
+                { Class: GhostType.Bashful } => new BashfulGhost(position),
+                { Class: GhostType.Pokey } => new PokeyGhost(position),
+                _ => throw new ArgumentOutOfRangeException(nameof(sprite)),
+            };
         }
 
         #region Serialization

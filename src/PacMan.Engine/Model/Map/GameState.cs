@@ -14,14 +14,16 @@
 
         public int Lives { get; private set; }
 
-        public Direction PacManNextTurn { get; set; }
+        public Direction PacManNextTurn { get; private set; }
 
-        public void UpMultiplier() => Multiplier = Multiplier * 2;
+        public void SetNextDirection(Direction direction) => PacManNextTurn = direction;
+
+        public void UpMultiplier() => Multiplier *= 2;
 
         public void DropMultiplier() => Multiplier = 1;
 
-        public void UpScore(int points) => Score = Score + points;
+        public void UpScore(int points) => Score += points;
 
-        public void DropLife() => Lives = Lives - 1;
+        public void DropLife() => Lives -= 1;
     }
 }

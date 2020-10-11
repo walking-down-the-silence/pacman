@@ -1,10 +1,7 @@
 ﻿namespace PacMan
 {
-    public class AxisAlignedBoundingBoxOverlapCheck : IOverlappingStrategy
+    public sealed class AxisAlignedBoundingBoxOverlapCheck : IOverlappingStrategy
     {
-        public bool Overlap(ISprite left, ISprite right)
-        {
-            return left.ToBoundingBox().Overlap(right.ToBoundingBox());
-        }
+        public bool Overlap(ISprite left, ISprite right) => left.ToBoundingBox().Overlap(right.ToBoundingBox());
     }
 }

@@ -5,13 +5,13 @@ namespace PacMan
 {
     public class EventSink : IEventSink
     {
-        private readonly Dictionary<Type, List<object>> _subscribers = new Dictionary<Type, List<object>>();
+        private readonly Dictionary<Type, List<object>> _subscribers = new ();
 
         public void Publish<TEvent>(TEvent value)
         {
             if (_subscribers.ContainsKey(value.GetType()))
             {
-                Action<object> handler = (action) => (action as Action<TEvent>)?.Invoke(value);
+                void handler(object action) => (action as Action<TEvent>)?.Invoke(value);
                 _subscribers[value.GetType()].ForEach(handler);
             }
         }

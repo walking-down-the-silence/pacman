@@ -1,6 +1,4 @@
 ﻿namespace PacMan
 {
-    public sealed class GhostEaten : Event
-    {
-    }
+    public sealed record GhostEaten : IEvent;
 }

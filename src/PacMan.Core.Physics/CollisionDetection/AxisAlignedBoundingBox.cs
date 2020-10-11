@@ -1,23 +1,11 @@
 ﻿namespace PacMan
 {
-    public class AxisAlignedBoundingBox
+    public record AxisAlignedBoundingBox(Vector2D LeftBottom, Vector2D RightTop)
     {
-        public AxisAlignedBoundingBox(Vector2D leftBotom, Vector2D rightTop)
-        {
-            LeftBottom = leftBotom;
-            RightTop = rightTop;
-            Size = new Vector2D(rightTop.X - leftBotom.X, rightTop.Y - leftBotom.Y);
-            Volume = Size.X * Size.Y;
-        }
-
         public static AxisAlignedBoundingBox Empty => new AxisAlignedBoundingBox(Vector2D.Zero, Vector2D.Zero);
 
-        public Vector2D LeftBottom { get; }
+        public int Volume => Size.X * Size.Y;
 
-        public Vector2D RightTop { get; }
-
-        public int Volume { get; }
-
-        public Vector2D Size { get; }
+        public Vector2D Size => new Vector2D(RightTop.X - LeftBottom.X, RightTop.Y - LeftBottom.Y);
     }
 }

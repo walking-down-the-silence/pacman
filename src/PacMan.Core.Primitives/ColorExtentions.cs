@@ -48,47 +48,25 @@ namespace PacMan
 
         public static ConsoleColor ToConsoleColor(this Color color)
         {
-            switch (color)
+            return color switch
             {
-                case Color.Black:
-                    return ConsoleColor.Black;
-                case Color.White:
-                    return ConsoleColor.White;
-                case Color.Gray:
-                    return ConsoleColor.Gray;
-                case Color.DarkGreen:
-                    return ConsoleColor.DarkGreen;
-                case Color.Green:
-                case Color.LightGreen:
-                    return ConsoleColor.Green;
-                case Color.DarkBlue:
-                    return ConsoleColor.DarkBlue;
-                case Color.Blue:
-                case Color.LightBlue:
-                    return ConsoleColor.Blue;
-                case Color.DarkRed:
-                    return ConsoleColor.DarkRed;
-                case Color.Red:
-                case Color.LightRed:
-                    return ConsoleColor.Red;
-                case Color.DarkYellow:
-                    return ConsoleColor.DarkYellow;
-                case Color.Yellow:
-                case Color.LightYellow:
-                    return ConsoleColor.Yellow;
-                case Color.DarkCyan:
-                    return ConsoleColor.DarkCyan;
-                case Color.Cyan:
-                case Color.LightCyan:
-                    return ConsoleColor.Cyan;
-                case Color.DarkPink:
-                    return ConsoleColor.DarkMagenta;
-                case Color.Pink:
-                case Color.LightPink:
-                    return ConsoleColor.Magenta;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(color), color, string.Empty);
-            }
+                Color.Black => ConsoleColor.Black,
+                Color.White => ConsoleColor.White,
+                Color.Gray => ConsoleColor.Gray,
+                Color.DarkGreen => ConsoleColor.DarkGreen,
+                Color.Green or Color.LightGreen => ConsoleColor.Green,
+                Color.DarkBlue => ConsoleColor.DarkBlue,
+                Color.Blue or Color.LightBlue => ConsoleColor.Blue,
+                Color.DarkRed => ConsoleColor.DarkRed,
+                Color.Red or Color.LightRed => ConsoleColor.Red,
+                Color.DarkYellow => ConsoleColor.DarkYellow,
+                Color.Yellow or Color.LightYellow => ConsoleColor.Yellow,
+                Color.DarkCyan => ConsoleColor.DarkCyan,
+                Color.Cyan or Color.LightCyan => ConsoleColor.Cyan,
+                Color.DarkPink => ConsoleColor.DarkMagenta,
+                Color.Pink or Color.LightPink => ConsoleColor.Magenta,
+                _ => throw new ArgumentOutOfRangeException(nameof(color), color, string.Empty),
+            };
         }
     }
 }

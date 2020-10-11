@@ -9,7 +9,7 @@ namespace PacMan
         public PacMan(Offset position) : base(position, new PacManFrame())
         {
             _initialPosition = position;
-            State = new CharacterState();
+            State = CharacterState.Default;
         }
 
         public CharacterState State { get; private set; }
@@ -35,9 +35,9 @@ namespace PacMan
                     .ToList();
 
                 // specified direction is not allowed, so stop
-                State.Direction = !allowedDirections.Contains(context.GameState.PacManNextTurn)
-                    ? Direction.None
-                    : context.GameState.PacManNextTurn;
+                State = !allowedDirections.Contains(context.GameState.PacManNextTurn)
+                    ? State with { Direction = Direction.None }
+                    : State with { Direction = context.GameState.PacManNextTurn };
             }
 
             if (State.Direction != Direction.None)
@@ -51,7 +51,7 @@ namespace PacMan
 
         public void Reset()
         {
-            State = new CharacterState { Direction = Direction.None, Target = Offset.Default };
+            State = new(Offset.Default, Direction.None);
             Position = _initialPosition;
             Ressurect();
         }

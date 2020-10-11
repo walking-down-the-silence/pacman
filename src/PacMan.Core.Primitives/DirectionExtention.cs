@@ -6,56 +6,36 @@ namespace PacMan
     {
         public static Direction ToOpposite(this Direction direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case Direction.None:
-                    return Direction.None;
-                case Direction.Left:
-                    return Direction.Right;
-                case Direction.LeftUp:
-                    return Direction.RightDown;
-                case Direction.Up:
-                    return Direction.Down;
-                case Direction.UpRight:
-                    return Direction.DownLeft;
-                case Direction.Right:
-                    return Direction.Left;
-                case Direction.RightDown:
-                    return Direction.LeftUp;
-                case Direction.Down:
-                    return Direction.Up;
-                case Direction.DownLeft:
-                    return Direction.UpRight;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, string.Empty);
-            }
+                Direction.None => Direction.None,
+                Direction.Left => Direction.Right,
+                Direction.LeftUp => Direction.RightDown,
+                Direction.Up => Direction.Down,
+                Direction.UpRight => Direction.DownLeft,
+                Direction.Right => Direction.Left,
+                Direction.RightDown => Direction.LeftUp,
+                Direction.Down => Direction.Up,
+                Direction.DownLeft => Direction.UpRight,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, string.Empty),
+            };
         }
 
         public static Offset ToOffset(this Direction direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case Direction.None:
-                    return new Offset(0, 0);
-                case Direction.Left:
-                    return new Offset(-1, 0);
-                case Direction.LeftUp:
-                    return new Offset(-1, -1);
-                case Direction.Up:
-                    return new Offset(0, -1);
-                case Direction.UpRight:
-                    return new Offset(1, -1);
-                case Direction.Right:
-                    return new Offset(1, 0);
-                case Direction.RightDown:
-                    return new Offset(1, 1);
-                case Direction.Down:
-                    return new Offset(0, 1);
-                case Direction.DownLeft:
-                    return new Offset(-1, 1);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, string.Empty);
-            }
+                Direction.None => new Offset(0, 0),
+                Direction.Left => new Offset(-1, 0),
+                Direction.LeftUp => new Offset(-1, -1),
+                Direction.Up => new Offset(0, -1),
+                Direction.UpRight => new Offset(1, -1),
+                Direction.Right => new Offset(1, 0),
+                Direction.RightDown => new Offset(1, 1),
+                Direction.Down => new Offset(0, 1),
+                Direction.DownLeft => new Offset(-1, 1),
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, string.Empty),
+            };
         }
 
         public static Offset Distance(this Direction direction, int speedPerSecond, DateTime lastTime, DateTime currentTime)

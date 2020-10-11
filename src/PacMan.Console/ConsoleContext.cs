@@ -1,18 +1,4 @@
 ﻿namespace PacMan
 {
-    public class ConsoleContext : IGameContext
-    {
-        public ConsoleContext(int fps, int offsetX, int offsetY)
-        {
-            Fps = fps;
-            OffsetX = offsetX;
-            OffsetY = offsetY;
-        }
-
-        public int Fps { get; }
-
-        public int OffsetX { get; }
-
-        public int OffsetY { get; }
-    }
+    public record ConsoleContext(int Fps, int OffsetX, int OffsetY) : IGameContext;
 }

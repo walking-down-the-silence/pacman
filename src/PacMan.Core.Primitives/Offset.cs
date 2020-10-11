@@ -3,51 +3,26 @@ using static System.Math;
 
 namespace PacMan
 {
-    public sealed class Offset
+    public sealed record Offset(int Left, int Top)
     {
-        public Offset(int left, int top)
-        {
-            Left = left;
-            Top = top;
-        }
+        public static Offset Default => new (0, 0);
 
-        public static Offset Default => new Offset(0, 0);
+        public Offset Extend(int times) => new (Left * times, Top * times);
 
-        public int Left { get; }
+        public Offset Extend(float times) => new ((int)(Left * times), (int)(Top * times));
 
-        public int Top { get; }
-
-        public override bool Equals(object obj) => (obj is Offset other) && InternalEquals(this, other);
-
-        public override int GetHashCode() => Left ^ Top;
-
-        public override string ToString() => $"Left = {Left}, Top = {Top}";
-
-        public Offset Extend(int times) => new Offset(Left * times, Top * times);
-
-        public Offset Extend(float times) => new Offset((int)(Left * times), (int)(Top * times));
-
-        public Offset Extend(double times) => new Offset((int)(Left * times), (int)(Top * times));
+        public Offset Extend(double times) => new ((int)(Left * times), (int)(Top * times));
 
         public Offset Extend(DateTime last, DateTime now) => Extend((now - last).TotalSeconds);
 
-        public Offset Shift(Offset offset) => new Offset(Left + offset.Left, Top + offset.Top);
+        public Offset Shift(Offset offset) => new (Left + offset.Left, Top + offset.Top);
 
-        public Offset Shift(int shiftLeft, int shiftTop) => new Offset(Left + shiftLeft, Top + shiftTop);
+        public Offset Shift(int shiftLeft, int shiftTop) => new (Left + shiftLeft, Top + shiftTop);
 
-        public Offset Subtract(Offset offset) => new Offset(Left - offset.Left, Top - offset.Top);
+        public Offset Subtract(Offset offset) => new (Left - offset.Left, Top - offset.Top);
 
-        public Offset Minimum(Offset offset) => new Offset(Min(Left, offset.Left), Min(Top, offset.Top));
+        public Offset Minimum(Offset offset) => new (Min(Left, offset.Left), Min(Top, offset.Top));
 
-        public Offset Maximum(Offset offset) => new Offset(Max(Left, offset.Left), Max(Top, offset.Top));
-
-        private static bool InternalEquals(Offset offset1, Offset offset2)
-        {
-            return ReferenceEquals(offset1, offset2)
-                || (offset1 != null
-                    && offset2 != null
-                    && offset1.Left == offset2.Left
-                    && offset1.Top == offset2.Top);
-        }
+        public Offset Maximum(Offset offset) => new (Max(Left, offset.Left), Max(Top, offset.Top));
     }
 }

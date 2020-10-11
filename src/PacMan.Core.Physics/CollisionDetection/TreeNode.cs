@@ -2,7 +2,7 @@
 
 namespace PacMan.Core.DataStructures.Trees
 {
-    public class TreeNode<TValue> where TValue : class
+    public record TreeNode<TValue> where TValue : class
     {
         public TreeNode(TValue value, AxisAlignedBoundingBox box)
         {

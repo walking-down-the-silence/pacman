@@ -1,15 +1,7 @@
 ﻿namespace PacMan
 {
-    public class CharacterState
+    public record CharacterState(Offset Target, Direction Direction)
     {
-        public CharacterState()
-        {
-            Target = Offset.Default;
-            Direction = Direction.None;
-        }
-
-        public Offset Target { get; set; }
-
-        public Direction Direction { get; set; }
+        public static CharacterState Default => new(Offset.Default, Direction.None);
     }
 }

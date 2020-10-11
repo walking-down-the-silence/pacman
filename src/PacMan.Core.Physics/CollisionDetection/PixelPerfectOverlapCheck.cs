@@ -2,7 +2,7 @@
 
 namespace PacMan
 {
-    public class PixelPerfectOverlapCheck : IOverlappingStrategy
+    public sealed class PixelPerfectOverlapCheck : IOverlappingStrategy
     {
         public bool Overlap(ISprite left, ISprite right)
         {

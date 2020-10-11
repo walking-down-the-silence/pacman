@@ -36,7 +36,7 @@ namespace PacMan
             _lastSwitchedTime = DateTime.Now;
             _lastFrightenedTime = DateTime.Now;
 
-            State = new CharacterState { Target = Offset.Default, Direction = Direction.Up };
+            State = new(Offset.Default, Direction.Up);
         }
 
         public GhostMode Mode { get; private set; }
@@ -69,7 +69,7 @@ namespace PacMan
             {
                 _lastFrightenedTime = DateTime.Now;
                 _currentMode = _frightenedMode;
-                State.Direction = State.Direction.ToOpposite();
+                State = State with { Direction = State.Direction.ToOpposite() };
                 Mode = GhostMode.Frightened;
                 SetCurrentFrame(_frightenedStateFrame);
             }
@@ -116,7 +116,7 @@ namespace PacMan
                 if (allowedDirections.Count == 1)
                 {
                     // there is only one way to go/turn - go/turn that way
-                    State.Direction = allowedDirections.Single();
+                    State = State with { Direction = allowedDirections.Single() };
                 }
                 else if (allowedDirections.Count == 0)
                 {
@@ -126,7 +126,7 @@ namespace PacMan
                         .OrderBy(neighbor => neighbor.EuclideanDistance(target))
                         .First();
 
-                    State.Direction = ghostPosition.ToDirection(targetDirection);
+                    State = State with { Direction = ghostPosition.ToDirection(targetDirection) };
                 }
                 else if (neighbors.Count >= 3)
                 {
@@ -138,7 +138,7 @@ namespace PacMan
                         .OrderBy(neighbor => neighbor.EuclideanDistance(target))
                         .First();
 
-                    State.Direction = ghostPosition.ToDirection(targetDirection);
+                    State = State with { Direction = ghostPosition.ToDirection(targetDirection) };
                 }
             }
 
@@ -151,7 +151,7 @@ namespace PacMan
         public void Reset()
         {
             _currentMode = _patrollingMode;
-            State = new CharacterState { Target = Offset.Default, Direction = Direction.Right };
+            State = new (Offset.Default, Direction.Right);
             Position = _initialPosition;
             Mode = GhostMode.Patroling;
             SetCurrentFrame(_normalStateFrame);
@@ -160,7 +160,7 @@ namespace PacMan
         public void Effect(FoodContext context)
         {
             if (context.Eatable is IPacMan
-                && Mode == GhostMode.Frightened 
+                && Mode == GhostMode.Frightened
                 && Mode != GhostMode.Dead)
             {
                 Kill();
@@ -192,7 +192,7 @@ namespace PacMan
                 _lastSwitchedTime = currentTime;
             }
         }
-        
+
         private sealed class PatrolingMode : IGhostMovementStrategy
         {
             private readonly Offset _target;

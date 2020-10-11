@@ -26,46 +26,31 @@ namespace PacMan
             int shiftY = target.Top - current.Top;
             var direction = (Sign(shiftX), Sign(shiftY));
 
-            switch (direction)
+            return direction switch
             {
-                case ValueTuple<int, int> t when t == (0, 0):
-                    return Direction.None;
-                case ValueTuple<int, int> t when t == (-1, 0):
-                    return Direction.Left;
-                case ValueTuple<int, int> t when t == (-1, -1):
-                    return Direction.LeftUp;
-                case ValueTuple<int, int> t when t == (0, -1):
-                    return Direction.Up;
-                case ValueTuple<int, int> t when t == (1, -1):
-                    return Direction.UpRight;
-                case ValueTuple<int, int> t when t == (1, 0):
-                    return Direction.Right;
-                case ValueTuple<int, int> t when t == (1, 1):
-                    return Direction.RightDown;
-                case ValueTuple<int, int> t when t == (0, 1):
-                    return Direction.Down;
-                case ValueTuple<int, int> t when t == (-1, 1):
-                    return Direction.DownLeft;
-                default:
-                    throw new InvalidOperationException($"Cannot convert {nameof(current)} value to direction.");
-            }
+                (0, 0)   => Direction.None,
+                (-1, 0)  => Direction.Left,
+                (-1, -1) => Direction.LeftUp,
+                (0, -1)  => Direction.Up,
+                (1, -1)  => Direction.UpRight,
+                (1, 0)   => Direction.Right,
+                (1, 1)   => Direction.RightDown,
+                (0, 1)   => Direction.Down,
+                (-1, 1)  => Direction.DownLeft,
+                _        => throw new InvalidOperationException($"Cannot convert {nameof(current)} value to direction."),
+            };
         }
 
         public static Offset Align(this Offset current, Offset target, Direction direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case Direction.Left:
-                    return new Offset(Max(current.Left, target.Left), Min(current.Top, target.Top));
-                case Direction.Up:
-                    return new Offset(Min(current.Left, target.Left), Max(current.Top, target.Top));
-                case Direction.Right:
-                    return new Offset(Min(current.Left, target.Left), Min(current.Top, target.Top));
-                case Direction.Down:
-                    return new Offset(Min(current.Left, target.Left), Min(current.Top, target.Top));
-                default:
-                    return current.Minimum(target);
-            }
+                Direction.Left => new Offset(Max(current.Left, target.Left), Min(current.Top, target.Top)),
+                Direction.Up => new Offset(Min(current.Left, target.Left), Max(current.Top, target.Top)),
+                Direction.Right => new Offset(Min(current.Left, target.Left), Min(current.Top, target.Top)),
+                Direction.Down => new Offset(Min(current.Left, target.Left), Min(current.Top, target.Top)),
+                _ => current.Minimum(target),
+            };
         }
     }
 }
